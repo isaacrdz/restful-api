@@ -33,6 +33,59 @@ public function paginar_get(){
 }
 
 
+
+
+
+
+  public function cliente_put(){
+
+    $data = $this->put();
+
+    $this->load->library('form_validation');
+
+    $this->form_validation->set_data($data);
+
+    // $this->form_validation->set_rules('correo','correo electronico','required|valid_email');
+    // $this->form_validation->set_rules('nombre','nombre','required|min_length[2]');
+
+    //TRUE :: Todo bien False :: Falla una regla
+    if( $this->form_validation->run('cliente_put') ){
+      //Todo bien
+      $this->response('Todo bien');
+
+    } else {
+      //Algo mal
+      // $this->response('Todo mal');
+      $respuesta = array(
+              'err' => TRUE,
+              'mensaje' => 'Hay errores en el envio de informacion',
+              'errores' => $this->form_validation->get_errores_arreglo()
+             );
+
+
+      $this->response($respuesta, REST_Controller::HTTP_BAD_REQUEST);
+
+    }
+
+    // $this-> response($data);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   public function cliente_get(){
 
     $cliente_id = $this->uri-> segment(3);
